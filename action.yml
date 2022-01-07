@@ -47,17 +47,21 @@ runs:
 
       - name: Install MGCB
         run: dotnet tool install -g dotnet-mgcb
+        shell: pwsh
 
       - name: Install dependencies
         run: nuget restore "${{ inputs.solution-path }}"
+        shell: pwsh
 
       - name: Build resources
         run: |
           cd "${{ inputs.content-mgcb-path }}"
           mgcb Content.mgcb /platform:${{ inputs.content-mgcb-platform }}
+        shell: pwsh
 
       - name: Build solution
-        run: msbuild "${{ inputs.project-path }}" -t:${{ inputs.build-target }}-p:Configuration=${{ inputs.build-configuration }}
+        run: msbuild "${{ inputs.project-path }}" -t:${{ inputs.build-target }} -p:Configuration=${{ inputs.build-configuration }}
+        shell: pwsh
 
 branding:
   icon: 'refresh-ccw'
