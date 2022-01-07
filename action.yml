@@ -54,7 +54,7 @@ runs:
       - name: Build resources
         run: |
           cd "${{ inputs.content-mgcb-path }}"
-          mgcb Content.mgcb /platform:Android
+          mgcb Content.mgcb /platform:${{ inputs.content-mgcb-platform }}
 
       - name: Build solution
         run: msbuild "${{ inputs.project-path }}" -t:${{ inputs.build-target }}-p:Configuration=${{ inputs.build-configuration }}
