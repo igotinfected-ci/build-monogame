@@ -2,7 +2,7 @@ name: 'Build MonoGame project'
 
 author: 'igotinfected (Jason Rebelo Neves)'
 
-description: 'Build your MonoGame projects with this action. Useful for build checks as well as a first step to packaging Android/iOS builds.'
+description: 'Build your MonoGame projects with this action. Useful for successful build checks.'
 
 inputs:
   dotnet-version:
@@ -28,8 +28,6 @@ inputs:
     description: 'The `msbuild` build configuration to use. Defaults to `Release`.'
     required: true
     default: 'Release'
-
-# TODO: define outputs
 
 runs:
   using: 'composite'
@@ -59,8 +57,12 @@ runs:
           mgcb Content.mgcb /platform:${{ inputs.content-mgcb-platform }}
         shell: pwsh
 
-      - name: Build solution
-        run: msbuild "${{ inputs.project-path }}" -t:${{ inputs.build-target }} -p:Configuration=${{ inputs.build-configuration }}
+      - name: Build project
+        if: 
+        run: |
+          msbuild "${{ inputs.project-path }}" \
+            -t:${{ inputs.build-target }} \
+            -p:Configuration=${{ inputs.build-configuration }}
         shell: pwsh
 
 branding:
