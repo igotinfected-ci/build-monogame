@@ -1,70 +1,74 @@
-name: 'Build MonoGame project'
+name: "Build MonoGame project"
 
-author: 'igotinfected (Jason Rebelo Neves)'
+author: "igotinfected (Jason Rebelo Neves)"
 
-description: 'Build your MonoGame projects with this action. Useful for successful build checks.'
+description: "Build your MonoGame projects with this action. Useful for build checks."
 
 inputs:
   dotnet-version:
-    description: '.NET version to set up `dotnet` with. Defaults to `3.1.x`.'
+    description: ".NET version to set up `dotnet` with. Defaults to `3.1.x`."
     required: false
-    default: '3.1.x'
+    default: "3.1.x"
   solution-path:
-    description: 'Path to the `.sln`. Used to restore NuGet packages from.'
+    description: "Path to the `.sln`. Used to restore NuGet packages from."
     required: true
   content-mgcb-path:
-    description: 'Path to the `Content.mgcb` file for a specific project. Used to build the MonoGame content files. Note: this may not be required in future releases.'
+    description: >
+      Path to the `Content.mgcb` file for a specific project.
+      Used to build the MonoGame content files.
+
+
+      Note: this may not be required in future releases.
     required: true
   content-mgcb-platform:
-    description: 'Platform to build Content files for. E.g.: `Android`.'
+    description: "Platform to build Content files for. E.g.: `Android`."
     required: true
   project-path:
-    description: 'Path to the `.csproj` to build with. This is passed to `msbuild` to initiate the build.'
+    description: "Path to the `.csproj` to build with. This is passed to `msbuild` to initiate the build."
     required: true
   build-target:
-    description: 'The `msbuild` target to use. E.g.: `PackageForAndroid`.'
+    description: "The `msbuild` target to use. E.g.: `PackageForAndroid`."
     required: true
   build-configuration:
-    description: 'The `msbuild` build configuration to use. Defaults to `Release`.'
+    description: "The `msbuild` build configuration to use. Defaults to `Release`."
     required: true
-    default: 'Release'
+    default: "Release"
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
-      - name: Checkout branch
-        uses: actions/checkout@v2.4.0
+    - name: Checkout branch
+      uses: actions/checkout@v2.4.x
 
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: ${{ inputs.dotnet-version }}
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ inputs.dotnet-version }}
 
-      - name: Setup msbuild
-        uses: microsoft/setup-msbuild@v1.1
+    - name: Setup msbuild
+      uses: microsoft/setup-msbuild@v1.1
 
-      - name: Install MGCB
-        run: dotnet tool install -g dotnet-mgcb
-        shell: pwsh
+    - name: Install MGCB
+      run: dotnet tool install -g dotnet-mgcb
+      shell: pwsh
 
-      - name: Install dependencies
-        run: nuget restore "${{ inputs.solution-path }}"
-        shell: pwsh
+    - name: Install dependencies
+      run: nuget restore "${{ inputs.solution-path }}"
+      shell: pwsh
 
-      - name: Build resources
-        run: |
-          cd "${{ inputs.content-mgcb-path }}"
-          mgcb Content.mgcb /platform:${{ inputs.content-mgcb-platform }}
-        shell: pwsh
+    - name: Build resources
+      run: |
+        cd "${{ inputs.content-mgcb-path }}"
+        mgcb Content.mgcb /platform:${{ inputs.content-mgcb-platform }}
+      shell: pwsh
 
-      - name: Build project
-        if: 
-        run: |
-          msbuild "${{ inputs.project-path }}" \
-            -t:${{ inputs.build-target }} \
-            -p:Configuration=${{ inputs.build-configuration }}
-        shell: pwsh
+    - name: Build project
+      run: |
+        msbuild "${{ inputs.project-path }}" `
+          -t:${{ inputs.build-target }} `
+          -p:Configuration=${{ inputs.build-configuration }}
+      shell: pwsh
 
 branding:
-  icon: 'refresh-ccw'
-  color: 'red'
+  icon: "check-circle"
+  color: "red"
