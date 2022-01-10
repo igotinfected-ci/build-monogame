@@ -26,7 +26,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build android project
-        uses: igotinfected-ci/build-monogame@v1
+        uses: igotinfected-ci/build-monogame@v2
         with:
           solution-path: '${{ github.workspace }}\Project\Project.sln'
           content-mgcb-path: '${{ github.workspace }}\Project\Android\Content'
