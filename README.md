@@ -2,7 +2,7 @@
 
 This action allows you to build your monogame project via **msbuild**.
 
-The action first checks out your repo and sets up `dotnet`,`msbuild`, as well as the `mgcb` build tool.
+The action sets up `dotnet`, `msbuild`, and the `mgcb` build tool.
 It then builds the `Content` resources using `mgcb` and then builds the game/project using `msbuild`.
 
 # Usage
@@ -22,6 +22,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
       - name: Build android project
         uses: igotinfected-ci/build-monogame@v1
         with:

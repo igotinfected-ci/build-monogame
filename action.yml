@@ -37,9 +37,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Checkout branch
-      uses: actions/checkout@v2
-
     - name: Setup dotnet
       uses: actions/setup-dotnet@v1
       with:
