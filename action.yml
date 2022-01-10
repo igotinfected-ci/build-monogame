@@ -23,8 +23,10 @@ inputs:
   content-mgcb-platform:
     description: "Platform to build Content files for. E.g.: `Android`."
     required: true
-  project-path:
-    description: "Path to the `.csproj` to build with. This is passed to `msbuild` to initiate the build."
+  csproj-path:
+    description: >
+      Path to the `.csproj` to build with.
+      This is passed to `msbuild` to initiate the build.
     required: true
   build-target:
     description: "The `msbuild` target to use. E.g.: `PackageForAndroid`."
@@ -61,7 +63,7 @@ runs:
 
     - name: Build project
       run: |
-        msbuild "${{ inputs.project-path }}" `
+        msbuild "${{ inputs.csproj-path }}" `
           -t:${{ inputs.build-target }} `
           -p:Configuration=${{ inputs.build-configuration }}
       shell: pwsh
