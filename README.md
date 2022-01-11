@@ -32,7 +32,7 @@ jobs:
           content-mgcb-path: '${{ github.workspace }}\Project\Android\Content'
           content-mgcb-platform: "Android"
           csproj-path: '${{ github.workspace }}\Project\Android.csproj'
-          build-target: "Android"
+          build-target: "PackageForAndroid"
           build-configuration: "Release"
 ```
 # License
