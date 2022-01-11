@@ -31,9 +31,8 @@ jobs:
           solution-path: '${{ github.workspace }}\Project\Project.sln'
           content-mgcb-path: '${{ github.workspace }}\Project\Android\Content'
           content-mgcb-platform: "Android"
-          project-path: '${{ github.workspace }}\Project\Android'
-          csproj-path: '${{ github.workspace }}\Project\Android\Android.csproj'
-          build-target: "PackageForAndroid"
+          csproj-path: '${{ github.workspace }}\Project\Android.csproj'
+          build-target: "Android"
           build-configuration: "Release"
 ```
 # License
